@@ -145,7 +145,9 @@ const LocationSearchPage = () => {
             )}
           </Formik>
 
-          <SearchResults locationsSearchResult={Locations} />
+          <div className="mt-2">
+            <SearchResults locationsSearchResult={Locations} />
+          </div>
         </div>
       </div>
     </div>

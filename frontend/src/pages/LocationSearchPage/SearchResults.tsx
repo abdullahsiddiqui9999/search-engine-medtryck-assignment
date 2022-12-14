@@ -10,19 +10,31 @@ const SearchResults = ({
   };
 }) => {
   if (!locationsSearchResult.loaded && !locationsSearchResult.loading)
-    return <p className="mt-2 text-center">No data available</p>;
+    return <p className="text-center">No data available</p>;
 
   if (locationsSearchResult.loading) {
-    return <p className="mt-2 text-center">Loading...</p>;
+    return <p className="text-center">Loading...</p>;
   }
 
   if (!locationsSearchResult.data?.results.length) {
-    return <p className="mt-2 text-center">No locations found</p>;
+    return <p className="text-center">No locations found</p>;
   }
 
   return (
     <>
       <div className="py-2 space-y-1">
+        <div className="flex">
+          <p className="w-1/2">
+            <span className="font-semibold">Total Hits: </span>{" "}
+            {locationsSearchResult.data.totalHits}
+          </p>
+          <p className="w-1/2">
+            <span className="font-semibold">Total Documents: </span>{" "}
+            {locationsSearchResult.data.totalDocuments}
+          </p>
+        </div>
+
+        <hr />
         {locationsSearchResult.data?.results.map((location) => (
           <div className="bg-slate-400 border rounded p-3" key={location.id}>
             <h3 className="text-xl">{location.name}</h3>
