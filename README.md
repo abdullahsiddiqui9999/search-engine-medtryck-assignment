@@ -24,6 +24,10 @@ As shown in the diagram above, we have 3 components that work together to provid
 5. Seed locations by running the rake task `bin/rake seed:seed_locations_from_json_file` inside `/backend` directory
 6. Go to `localhost:3000` in the browser and start searching locations
 
+Test Run:
+
+https://user-images.githubusercontent.com/54449489/207718017-f82dfc4f-50dc-4a89-a733-69fe4264963f.mov
+
 ## Code Structure
 ### Rails App
 - Models
