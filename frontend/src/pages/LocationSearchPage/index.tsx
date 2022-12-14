@@ -1,7 +1,6 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useState } from "react";
-import * as Yup from "yup";
 import SearchResults from "./SearchResults";
+import SearchForm from "./SearchForm";
 
 interface GeoLocation {
   lat: number;
@@ -23,7 +22,7 @@ export interface LocationSearchResult {
 }
 
 const LocationSearchPage = () => {
-  const [Locations, setLocations] = useState<{
+  const [locations, setLocations] = useState<{
     loaded: boolean;
     loading: boolean;
     data?: LocationSearchResult;
@@ -32,25 +31,22 @@ const LocationSearchPage = () => {
     loading: false,
   });
 
-  const LocationFormSchema = Yup.object().shape({
-    searchString: Yup.string().min(1, "Too Short!").required("Required"),
-    latitude: Yup.number()
-      .min(1, "Must be greater than 0")
-      .required("Required"),
-    longitude: Yup.number()
-      .min(1, "Must be greater than 0")
-      .required("Required"),
-  });
-
-  const inputFieldStyles =
-    "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
-  const errorStyles = "text-red-500 text-sm";
+  const locationFormSubmitHandler = (
+    setSubmitting: (isSubmitting: boolean) => void,
+    searchString: string,
+    latitude: number,
+    longitude: number
+  ) => {
+    fetchLocations(searchString, latitude, longitude, () =>
+      setSubmitting(false)
+    );
+  };
 
   const fetchLocations = (
     searchString: string,
     latitude: number,
     longitude: number,
-    onComplete: (isSubmitting: boolean) => void
+    onComplete: () => void
   ) => {
     setLocations({ loaded: false, loading: true, data: undefined });
     fetch(
@@ -60,12 +56,12 @@ const LocationSearchPage = () => {
       .then(
         (result: LocationSearchResult) => {
           setLocations({ loaded: true, loading: false, data: result });
-          onComplete(false);
+          onComplete();
         },
         (error) => {
           console.error(error);
           setLocations({ loaded: false, loading: false, data: undefined });
-          onComplete(false);
+          onComplete();
         }
       );
   };
@@ -77,76 +73,10 @@ const LocationSearchPage = () => {
           <h1 className="text-4xl mt-4">Location Search</h1>
           <hr />
 
-          <Formik
-            initialValues={{ searchString: "", latitude: 0, longitude: 0 }}
-            validationSchema={LocationFormSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              fetchLocations(
-                values.searchString,
-                values.latitude,
-                values.longitude,
-                setSubmitting
-              );
-            }}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <div className="flex flex-col mt-3">
-                  <Field
-                    type="text"
-                    name="searchString"
-                    className={inputFieldStyles}
-                    placeholder="Search Locations"
-                  />
-                  <ErrorMessage
-                    name="searchString"
-                    component="div"
-                    className={errorStyles}
-                  />
-
-                  <div className="flex mt-2 space-x-2">
-                    <div className="w-1/2">
-                      <Field
-                        type="number"
-                        name="latitude"
-                        className={inputFieldStyles}
-                        placeholder="Latitude"
-                      />
-                      <ErrorMessage
-                        name="latitude"
-                        component="div"
-                        className={errorStyles}
-                      />
-                    </div>
-                    <div className="w-1/2">
-                      <Field
-                        type="number"
-                        name="longitude"
-                        className={inputFieldStyles}
-                        placeholder="longitude"
-                      />
-                      <ErrorMessage
-                        name="longitude"
-                        component="div"
-                        className={errorStyles}
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-                  >
-                    Fetch
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+          <SearchForm onFormSubmit={locationFormSubmitHandler} />
 
           <div className="mt-2">
-            <SearchResults locationsSearchResult={Locations} />
+            <SearchResults locationsSearchResult={locations} />
           </div>
         </div>
       </div>
