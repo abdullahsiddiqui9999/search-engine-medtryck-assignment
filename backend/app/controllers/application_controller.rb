@@ -1,9 +1,5 @@
-class ApplicationController < ActionController::Base
-  def search
-    puts "Hellow orld"
+# frozen_string_literal: true
 
-    respond_to do |format|
-      format.json { render json: { abdull: "fgjk" } }
-    end
-  end
+# App Controller
+class ApplicationController < ActionController::Base
 end

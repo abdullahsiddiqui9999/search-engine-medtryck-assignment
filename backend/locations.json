@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Massage",
+    "position": {
+      "lat": 59.3166428,
+      "lng": 18.0561182999999
+    }
+  },
+  {
+    "id": 2,
+    "name": "Salongens massage",
+    "position": {
+      "lat": 59.3320299,
+      "lng": 18.023149800000056
+    }
+  },
+  {
+    "id": 3,
+    "name": "Nirvana physical therapy",
+    "position": {
+      "lat": 59.3320299,
+      "lng": 18.023149800000056
+    }
+  },
+  {
+    "id": 4,
+    "name": "Mydtreck massage center",
+    "position": {
+      "lat": 59.3320299,
+      "lng": 18.023149800000056
+    }
+  },
+  {
+    "id": 5,
+    "name": "Vog towers massage center",
+    "position": {
+      "lat": 59.3320299,
+      "lng": 18.023149800000056
+    }
+  }
+]
