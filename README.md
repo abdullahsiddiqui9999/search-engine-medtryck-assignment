@@ -9,6 +9,8 @@ As shown in the diagram above, we have 3 components that work together to provid
   - Handles the location searching request coming from the react frontend.
   - Communicates with the elastic search server. It creates, updates and deletes the indexes on elastic search server.
 - **Elastic Search Server.** This service holds the inverted index to perform full-text search on Locations. It run on `localhost:9200`.
+  - It keeps an inverted index on `Location.title`.
+  - It does "term-level query" and uses `BM25` similarity algorthim to rank the retrieved results. `BM25` uses `TF/IDF` algo underneath and is suited for smaller fields like `Location.title`. More about it on https://www.elastic.co/guide/en/elasticsearch/reference/7.17/index-modules-similarity.html#bm25
 
 ## Developed in Environment
 - Node v19.2.0
@@ -26,7 +28,7 @@ As shown in the diagram above, we have 3 components that work together to provid
 
 Test Run:
 
-https://user-images.githubusercontent.com/54449489/207718017-f82dfc4f-50dc-4a89-a733-69fe4264963f.mov
+https://user-images.githubusercontent.com/54449489/207801326-b64c9f07-36b9-4458-8eb0-fe75c67010b2.mov
 
 ## Code Structure
 ### Rails App
@@ -43,7 +45,7 @@ https://user-images.githubusercontent.com/54449489/207718017-f82dfc4f-50dc-4a89-
   - `search_index:create_search_index` to create inverted index on location on elastic search
   - `seed:seed_locations_from_json_file` for loading location from `locations.json` file
 - Initializers
-  - `cors.rb` to handle CORS config (for ease - we have currently requests from every origin)
+  - `cors.rb` to handle CORS config (for ease - we have currently enabled requests from every origin)
 
 ### React App
 - App uses `tailwind` for styling, `Formik` for forms and `yup` for form validation.
