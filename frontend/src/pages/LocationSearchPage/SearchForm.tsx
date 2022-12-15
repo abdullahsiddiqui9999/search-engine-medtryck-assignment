@@ -55,6 +55,7 @@ const SearchForm = ({
 
             <div className="flex mt-2 space-x-2">
               <div className="w-1/2">
+                <label className=" text-sm font-bold">Latitude</label>
                 <Field
                   type="number"
                   name="latitude"
@@ -68,6 +69,7 @@ const SearchForm = ({
                 />
               </div>
               <div className="w-1/2">
+                <label className=" text-sm font-bold">Longitude</label>
                 <Field
                   type="number"
                   name="longitude"
